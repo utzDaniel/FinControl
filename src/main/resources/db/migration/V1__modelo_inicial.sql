@@ -21,7 +21,7 @@ CREATE TABLE familia (
 );
 
 CREATE TABLE dominio_beneficio (
-    id INT PRIMARY KEY IDENTITY(1,1),
+    id INT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL UNIQUE
 );
 
@@ -36,7 +36,7 @@ CREATE TABLE beneficio (
 );
 
 CREATE TABLE dominio_despesa (
-    id INT PRIMARY KEY IDENTITY(1,1),
+    id INT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL UNIQUE
 );
 
@@ -70,7 +70,7 @@ CREATE TABLE detalhe_despesa (
 );
 
 CREATE TABLE dominio_pagamento (
-    id INT PRIMARY KEY IDENTITY(1,1),
+    id INT PRIMARY KEY,
     nom VARCHAR(50) NOT NULL UNIQUE
 );
 
@@ -85,4 +85,3 @@ CREATE TABLE pagamento (
     CONSTRAINT FK_dompgt_pagamento FOREIGN KEY (id_dom_pgt) REFERENCES dominio_pagamento(id),
     CONSTRAINT FK_dmnbnf_pagamento FOREIGN KEY (id_dmn_bnf) REFERENCES dominio_beneficio(id)
 );
-

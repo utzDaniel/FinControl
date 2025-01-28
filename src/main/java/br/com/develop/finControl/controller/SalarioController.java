@@ -1,5 +1,6 @@
 package br.com.develop.finControl.controller;
 
+import br.com.develop.finControl.request.SalarioAtualizarRequest;
 import br.com.develop.finControl.request.SalarioCadastrarRequest;
 import br.com.develop.finControl.response.ISalarioResponse;
 import br.com.develop.finControl.service.SalarioService;
@@ -35,6 +36,12 @@ public class SalarioController {
                                                              String cpf,
                                                              @RequestBody @Valid SalarioCadastrarRequest request) {
         return new ResponseEntity<>(this.salarioService.cadastrarSalario(cpf, request), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ISalarioResponse> atualizarSalario(@PathVariable Long id, @RequestBody @Valid SalarioAtualizarRequest request) {
+        return this.salarioService.atualizarSalario(id, request)
+                .map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

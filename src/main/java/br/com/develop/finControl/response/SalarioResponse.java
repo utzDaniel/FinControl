@@ -1,5 +1,6 @@
 package br.com.develop.finControl.response;
 
+import br.com.develop.finControl.entidade.Salario;
 import br.com.develop.finControl.util.Constante;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -19,6 +20,12 @@ public class SalarioResponse implements ISalarioResponse {
         this.id = (long) id;
         this.valorLiquido = valorLiquido;
         this.data = data;
+    }
+
+    public SalarioResponse(Salario salario) {
+        this.id = salario.getId();
+        this.valorLiquido = salario.getValorLiquido();
+        this.data = salario.getData();
     }
 
 }

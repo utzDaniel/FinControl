@@ -1,9 +1,9 @@
 package br.com.develop.finControl.entidade;
 
-import br.com.develop.finControl.request.SalarioCadastrarRequest;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,7 +20,7 @@ public class Salario {
     private Long idUsuario;
 
     @Column(name = "vlr_liq")
-    private Double valorLiquido;
+    private BigDecimal valorLiquido;
 
     @Column(name = "dat")
     private LocalDateTime data;

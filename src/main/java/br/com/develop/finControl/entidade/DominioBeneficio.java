@@ -1,6 +1,9 @@
 package br.com.develop.finControl.entidade;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
@@ -9,7 +12,6 @@ import lombok.Data;
 public class DominioBeneficio {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 

@@ -3,6 +3,7 @@ package br.com.develop.finControl.entidade;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -22,7 +23,7 @@ public class Beneficio {
     private Long idDominioBeneficio;
 
     @Column(name = "vlr")
-    private Double valor;
+    private BigDecimal valor;
 
     @Column(name = "dat")
     private LocalDateTime data;
