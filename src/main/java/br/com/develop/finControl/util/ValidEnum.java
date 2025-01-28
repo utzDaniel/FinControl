@@ -1,4 +1,4 @@
-package br.com.develop.finControl.enuns;
+package br.com.develop.finControl.util;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

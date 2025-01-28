@@ -12,14 +12,14 @@ import java.time.LocalDateTime;
 public class BeneficioResponse implements IBeneficioResponse {
 
     private Long id;
-    private Long tipo;
+    private Long tipoBeneficio;
     private BigDecimal valor;
     @JsonFormat(pattern = Constante.FORMATO_DATA_HORA, timezone = "UTC")
     private LocalDateTime data;
 
-    public BeneficioResponse(int id, BigDecimal valor, LocalDateTime data, Long tipo) {
+    public BeneficioResponse(int id, BigDecimal valor, LocalDateTime data, Long tipoBeneficio) {
         this.id = (long) id;
-        this.tipo = tipo;
+        this.tipoBeneficio = tipoBeneficio;
         this.valor = valor;
         this.data = data;
     }
@@ -28,6 +28,6 @@ public class BeneficioResponse implements IBeneficioResponse {
         this.id = beneficio.getId();
         this.valor = beneficio.getValor();
         this.data = beneficio.getData();
-        this.tipo = beneficio.getIdDominioBeneficio();
+        this.tipoBeneficio = beneficio.getIdDominioBeneficio();
     }
 }

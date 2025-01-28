@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -25,7 +26,7 @@ public class SalarioService {
     }
 
     public ISalarioResponse cadastrarSalario(String cpf, SalarioCadastrarRequest request) {
-        var data = LocalDateTime.now(ZoneOffset.UTC);
+        var data = Objects.isNull(request.getData()) ? LocalDateTime.now(ZoneOffset.UTC) : request.getData();
         var id = this.salarioRepository.cadastrarSalario(cpf, request.getValorLiquido(), data);
         if (id == 0) throw new EntityNotFoundException("Usuario não encontrado com esse cpf na base de dados.");
         return new SalarioResponse(id, request.getValorLiquido(), data);
@@ -35,6 +36,7 @@ public class SalarioService {
         return Optional.ofNullable(this.salarioRepository.findById(id)
                 .map(v -> {
                     v.setValorLiquido(request.getValorLiquido());
+                    v.setData(Objects.isNull(request.getData()) ? LocalDateTime.now(ZoneOffset.UTC) : request.getData());
                     this.salarioRepository.save(v);
                     return new SalarioResponse(v);
                 }).orElse(null));

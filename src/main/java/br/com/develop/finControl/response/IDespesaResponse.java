@@ -3,18 +3,18 @@ package br.com.develop.finControl.response;
 import br.com.develop.finControl.util.Constante;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public interface IBeneficioResponse {
+public interface IDespesaResponse {
 
     Long getId();
 
-    BigDecimal getValor();
-
-    Long getTipoBeneficio();
+    String getNome();
 
     @JsonFormat(pattern = Constante.FORMATO_DATA_HORA, timezone = "UTC")
-    LocalDateTime getData();
+    LocalDateTime getDataReferencia();
+
+    @JsonFormat(pattern = Constante.FORMATO_DATA_HORA, timezone = "UTC")
+    LocalDateTime getDataVencimento();
 
 }

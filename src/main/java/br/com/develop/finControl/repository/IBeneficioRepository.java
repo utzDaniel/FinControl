@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface IBeneficioRepository extends JpaRepository<Beneficio, Long> {
 
-    @Query(value = "select beneficio.id as id, beneficio.vlr as valor, beneficio.dat as data, beneficio.id_dmn_bnf as tipo " +
+    @Query(value = "select beneficio.id as id, beneficio.vlr as valor, beneficio.dat as data, beneficio.id_dmn_bnf as tipoBeneficio " +
             "from beneficio inner join usuario on beneficio.id_usr = usuario.id " +
             "where usuario.cpf = :cpf " +
             "order by beneficio.dat desc", nativeQuery = true)
@@ -23,11 +23,11 @@ public interface IBeneficioRepository extends JpaRepository<Beneficio, Long> {
     @Transactional
     @Query(value = "INSERT INTO beneficio " +
             "(id_usr, vlr, dat, id_dmn_bnf) " +
-            "SELECT usuario.id, :valor, :data, :tipo " +
+            "SELECT usuario.id, :valor, :data, :tipoBeneficio " +
             "FROM usuario " +
             "WHERE usuario.cpf = :cpf; " +
             "SELECT SCOPE_IDENTITY()", nativeQuery = true)
-    int cadastrarBeneficio(String cpf, BigDecimal valor, LocalDateTime data, Long tipo);
+    int cadastrarBeneficio(String cpf, BigDecimal valor, LocalDateTime data, Long tipoBeneficio);
 
     @Modifying
     @Transactional

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -25,17 +26,18 @@ public class BeneficioService {
     }
 
     public IBeneficioResponse cadastrarBeneficio(String cpf, BeneficioCadastrarRequest request) {
-        var data = LocalDateTime.now(ZoneOffset.UTC);
-        var id = this.beneficioRepository.cadastrarBeneficio(cpf, request.getValor(), data, request.getTipo());
+        var data = Objects.isNull(request.getData()) ? LocalDateTime.now(ZoneOffset.UTC) : request.getData();
+        var id = this.beneficioRepository.cadastrarBeneficio(cpf, request.getValor(), data, request.getTipoBeneficio());
         if (id == 0) throw new EntityNotFoundException("Usuario não encontrado com esse cpf na base de dados.");
-        return new BeneficioResponse(id, request.getValor(), data, request.getTipo());
+        return new BeneficioResponse(id, request.getValor(), data, request.getTipoBeneficio());
     }
 
     public Optional<IBeneficioResponse> atualizarBeneficio(Long id, BeneficioAtualizarRequest request) {
         return Optional.ofNullable(this.beneficioRepository.findById(id)
                 .map(v -> {
                     v.setValor(request.getValor());
-                    v.setIdDominioBeneficio(request.getTipo());
+                    v.setIdDominioBeneficio(request.getTipoBeneficio());
+                    v.setData(Objects.isNull(request.getData()) ? LocalDateTime.now(ZoneOffset.UTC) : request.getData());
                     this.beneficioRepository.save(v);
                     return new BeneficioResponse(v);
                 }).orElse(null));

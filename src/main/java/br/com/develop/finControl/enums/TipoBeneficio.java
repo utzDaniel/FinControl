@@ -1,4 +1,4 @@
-package br.com.develop.finControl.enuns;
+package br.com.develop.finControl.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

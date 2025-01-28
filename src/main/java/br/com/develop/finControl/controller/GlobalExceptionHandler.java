@@ -1,5 +1,6 @@
 package br.com.develop.finControl.controller;
 
+import br.com.develop.finControl.exception.RegraExeception;
 import br.com.develop.finControl.response.ErrorResponse;
 import br.com.develop.finControl.response.ViolacaoResponse;
 import jakarta.persistence.EntityNotFoundException;
@@ -40,8 +41,8 @@ public class GlobalExceptionHandler {
         var errorResponse = new ErrorResponse();
         errorResponse.setPath(request.getRequestURI());
         errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-        errorResponse.setTitulo("Operação inválida.");
-        errorResponse.setDetalhe("Erro ao converter json.");
+        errorResponse.setTitulo("Erro ao converter json.");
+        errorResponse.setDetalhe(ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -54,6 +55,18 @@ public class GlobalExceptionHandler {
         errorResponse.setTitulo("Não Encontrado.");
         errorResponse.setDetalhe(ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RegraExeception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleRegraExeception(RegraExeception ex, HttpServletRequest request) {
+        var errorResponse = new ErrorResponse();
+        errorResponse.setPath(request.getRequestURI());
+        errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setTitulo("Operação inválida.");
+        errorResponse.setDetalhe("A requsição não respeita o schema.");
+        errorResponse.setDetalhe(ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
 }
