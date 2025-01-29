@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface IPagamentoRepository extends JpaRepository<Pagamento, Long> {
 
-    @Query(value = "select top 1 1 from pagamento " +
+    @Query(value = "select pagamento.id_dps from pagamento " +
             "inner join despesa on pagamento.id_dps = despesa.id " +
             "where despesa.id = :id", nativeQuery = true)
     Optional<Integer> existePagamentoDespesa(Long id);

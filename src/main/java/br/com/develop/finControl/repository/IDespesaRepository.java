@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface IDespesaRepository extends JpaRepository<Despesa, Long> {
 
-    @Query(value = "select top 1 1 from despesa where id = :id", nativeQuery = true)
+    @Query(value = "select 1 from despesa where id = :id", nativeQuery = true)
     Optional<Integer> existeDespesa(Long id);
 
     @Query(value = "select id as id, nom as nome, dat_ref as dataReferencia, dat_vct as dataVencimento " +

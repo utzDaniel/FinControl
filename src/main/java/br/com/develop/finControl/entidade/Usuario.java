@@ -32,5 +32,6 @@ public class Usuario {
         this.nome = request.getNome();
         this.cpf = request.getCpf();
         this.email = request.getEmail();
+        this.idFamilia = request.getIdFamilia();
     }
 }

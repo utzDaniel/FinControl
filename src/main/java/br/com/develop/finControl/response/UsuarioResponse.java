@@ -9,11 +9,13 @@ public class UsuarioResponse implements IUsuarioResponse {
     private String nome;
     private String cpf;
     private String email;
+    private Long idFamilia;
 
     public UsuarioResponse(Usuario usuario) {
         this.nome = usuario.getNome();
         this.cpf = usuario.getCpf();
         this.email = usuario.getEmail();
+        this.idFamilia = usuario.getIdFamilia();
     }
 
 }

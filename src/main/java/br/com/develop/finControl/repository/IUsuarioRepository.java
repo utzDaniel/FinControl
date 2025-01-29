@@ -13,11 +13,11 @@ import java.util.Optional;
 public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 
 
-    @Query(value = "select nom as nome, cpf as cpf, eml as email " +
+    @Query(value = "select nom as nome, cpf as cpf, eml as email, id_fml as idFamilia " +
             "from usuario", nativeQuery = true)
     List<IUsuarioResponse> listarUsuarios();
 
-    @Query(value = "select nom as nome, cpf as cpf, eml as email " +
+    @Query(value = "select nom as nome, cpf as cpf, eml as email, id_fml as idFamilia " +
             "from usuario where cpf = :cpf", nativeQuery = true)
     Optional<IUsuarioResponse> obterUsuarioPorCpf(String cpf);
 
@@ -28,4 +28,9 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
     int deletarPorCpf(String cpf);
 
     Optional<Usuario> findByCpf(String cpf);
+
+    @Query(value = "select familia.id from usuario " +
+            "inner join familia on usuario.id_fml = familia.id " +
+            "where cpf = :cpf", nativeQuery = true)
+    Optional<Integer> existeFamilia(String cpf);
 }

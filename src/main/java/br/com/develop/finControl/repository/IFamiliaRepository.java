@@ -26,4 +26,7 @@ public interface IFamiliaRepository extends JpaRepository<Familia, Long> {
             "SELECT SCOPE_IDENTITY()", nativeQuery = true)
     int deletarPorId(Long id);
 
+    @Query(value = "select 1 from familia where id = :id", nativeQuery = true)
+    Optional<Integer> existeFamilia(Long id);
+
 }

@@ -3,6 +3,7 @@ package br.com.develop.finControl.repository;
 import br.com.develop.finControl.entidade.Item;
 import br.com.develop.finControl.response.IItemResponse;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,4 +27,6 @@ public interface IItemRepository extends JpaRepository<Item, Long> {
             "SELECT SCOPE_IDENTITY()", nativeQuery = true)
     int deletarPorId(Long id);
 
+    @Query(value = "select 1 from item where id = :id", nativeQuery = true)
+    Optional<Integer> existeItem(Long id);
 }

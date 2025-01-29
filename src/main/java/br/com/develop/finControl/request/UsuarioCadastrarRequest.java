@@ -20,4 +20,6 @@ public class UsuarioCadastrarRequest {
     @Email(message = "O campo 'email' deve ter um formato válido")
     private String email;
 
+    private Long idFamilia;
+
 }
