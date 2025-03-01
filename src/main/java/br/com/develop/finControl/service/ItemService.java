@@ -6,10 +6,10 @@ import br.com.develop.finControl.request.ItemAtualizarRequest;
 import br.com.develop.finControl.request.ItemCadastrarRequest;
 import br.com.develop.finControl.response.IItemResponse;
 import br.com.develop.finControl.response.ItemResponse;
+import br.com.develop.finControl.response.PaginacaoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,8 +18,11 @@ public class ItemService {
     @Autowired
     private IItemRepository itemRepository;
 
-    public List<IItemResponse> listarItens() {
-        return this.itemRepository.listarItens();
+    public PaginacaoResponse<IItemResponse> listarItens(Long pagAtual, Long itensPorPag, String valor) {
+        var qtdTotalItens = this.itemRepository.quantidadeItens(valor);
+        var itens = this.itemRepository.listarItens(pagAtual, itensPorPag, valor);
+        var qtdPag = (long) Math.ceil((double) this.itemRepository.count() / itensPorPag);
+        return new PaginacaoResponse<>(pagAtual, itensPorPag, qtdPag, qtdTotalItens, itens);
     }
 
     public Optional<IItemResponse> obterItem(Long id) {

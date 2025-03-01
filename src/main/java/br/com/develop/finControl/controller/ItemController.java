@@ -3,15 +3,15 @@ package br.com.develop.finControl.controller;
 import br.com.develop.finControl.request.ItemAtualizarRequest;
 import br.com.develop.finControl.request.ItemCadastrarRequest;
 import br.com.develop.finControl.response.IItemResponse;
+import br.com.develop.finControl.response.PaginacaoResponse;
 import br.com.develop.finControl.service.ItemService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Validated
 @RestController
@@ -22,8 +22,16 @@ public class ItemController {
     private ItemService itemService;
 
     @GetMapping
-    public ResponseEntity<List<IItemResponse>> listarItens() {
-        return new ResponseEntity<>(this.itemService.listarItens(), HttpStatus.OK);
+    public ResponseEntity<PaginacaoResponse<IItemResponse>> listarItens(
+            @RequestParam(defaultValue = "1", required = false)
+            @Min(value = 1, message = "O campo 'paginaAtual' deve ser um número positivo.")
+            Long paginaAtual,
+            @RequestParam(defaultValue = "10", required = false)
+            @Min(value = 1, message = "O campo 'itensPorPag' deve ser um número positivo.")
+            Long itensPorPagina,
+            @RequestParam(required = false)
+            String valor) {
+        return new ResponseEntity<>(this.itemService.listarItens(paginaAtual, itensPorPagina, valor), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

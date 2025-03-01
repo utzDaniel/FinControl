@@ -5,6 +5,7 @@ import br.com.develop.finControl.response.ErrorResponse;
 import br.com.develop.finControl.response.ViolacaoResponse;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -69,4 +70,20 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException ex, HttpServletRequest request) {
+        var errorResponse = new ErrorResponse();
+        errorResponse.setPath(request.getRequestURI());
+        errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setTitulo("Operação inválida.");
+        errorResponse.setDetalhe("A requsição não respeita o schema.");
+
+        var violacoes = ex.getConstraintViolations().stream()
+                .map(ViolacaoResponse::new)
+                .collect(Collectors.toList());
+        errorResponse.setViolacoes(violacoes);
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 }
